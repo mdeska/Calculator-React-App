@@ -3,15 +3,26 @@ import { default as bemCssModules } from 'bem-css-modules'
 import { default as AppStyles } from './App.module.scss';
 import { Display } from './components/Display/Display';
 import { Button } from './components/Button/Button';
+import { Provider } from 'mobx-react';
+import { MainKeyboard } from './components/MainKeyboard/MainKeyboard';
+import { MemoryContainer } from './containers/MemoryContainer';
+import { getRootStores } from './stores/getRootStores';
+
+bemCssModules.setSettings({
+  modifierDelimiter: '--'
+})
 
 const style = bemCssModules(AppStyles);
 
 function App() {
   return (
-    <div className={style()}>
-      <Display />
-      <Button content='T' onClick={() => console.log("hello")} />
-    </div>
+    <Provider {...getRootStores()}>
+      <div className={style()}>
+        <Display />
+        <MemoryContainer />
+        <MainKeyboard />
+      </div>
+    </Provider>
   );
 }
 
